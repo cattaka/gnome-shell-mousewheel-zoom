@@ -23,9 +23,9 @@ https://launchpad.net/~tobias-quinn/+archive/gsmz
 
 to install do:
 
-sudo add-apt-repository ppa:tobias-quinn/gsmz
-sudo apt-get update
-sudo apt-get install gnome-shell-mousewheel-zoom
+    sudo add-apt-repository ppa:tobias-quinn/gsmz
+    sudo apt-get update
+    sudo apt-get install gnome-shell-mousewheel-zoom
 
 The branches have recently changed master is for gnome 3.4 onwards (ubuntu precies and quantal).
 
@@ -34,12 +34,22 @@ oneiric branch is for ubuntu oneiric and uses python-xlib
 There is also a ubuntu precise port using gsettings in the branch precise-gsettings.
 
 
-==============================================================================================
-For Linux Mint 15 olivia (Ubuntu 13.04 raring) this is the installation procedure that worked for me:
-sudo apt-get install git valac libx11-dev
-mkdir ~/src ; cd ~/src
-git clone https://github.com/tobiasquinn/gnome-shell-mousewheel-zoom.git
-cd gnome-shell-mousewheel-zoom ; make
-sudo cp com.tobiasquinn.mousewheelzoom.gschema.xml /usr/share/glib-2.0/schemas/
-sudo glib-compile-schemas /usr/share/glib-2.0/schemas
-./mousewheelzoom (<-- add to mdm startup applications)
+==============================================================================
+
+You can also install the plugin from source. For Linux Mint 15 olivia (Ubuntu
+13.04 raring) this is the installation procedure that worked for me:
+
+    # Install the prerequisites
+    sudo apt-get install git valac libx11-dev
+
+    # Check out the repository
+    git clone https://github.com/tobiasquinn/gnome-shell-mousewheel-zoom.git
+    cd gnome-shell-mousewheel-zoom
+
+    # Install the settings schemas
+    sudo cp com.tobiasquinn.mousewheelzoom.gschema.xml /usr/share/glib-2.0/schemas/
+    sudo glib-compile-schemas /usr/share/glib-2.0/schemas
+
+    # Compile and run the daemon
+    make
+    ./mousewheelzoom  # <-- add to mdm startup applications
