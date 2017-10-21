@@ -16,6 +16,16 @@
             <summary>Whether to include super key in modifier</summary>
             <description>If this is checked, the super key must be pressed in addition to whatever other modifier key is used.</description>
         </key>
+        <key type="b" name="invert-scroll">
+            <default>false</default>
+            <summary>Invert zoom-up and zoom-down</summary>
+            <description>If this is checked, scroll-up does zoom-up and scroll-down does zoom-down.</description>
+        </key>
+        <key type="d" name="incremental-zoom-rate">
+            <default>0.1</default>
+            <range min="0.001" max="0.5"/>
+            <summary>Incremental zoom rate</summary>
+            <description>The incremental rate for zoom-up and zoom-down.</description>
+        </key>
     </schema>
 </schemalist>
-

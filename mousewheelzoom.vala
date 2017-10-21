@@ -31,12 +31,13 @@ class Zoomer : GLib.Object {
     private ZoomRegion zoom;
 
     // Zoom state
-    private const double incr = 0.1;
+    private double incr = 0.1;
     private double current_zoom;
     private bool zoom_active;
     private bool interfaces_active;
 
-    public Zoomer() {
+    public Zoomer(double _incr) {
+        incr = _incr;
         interfaces_active = false;
         mag = Bus.get_proxy_sync(BusType.SESSION,
                 "org.gnome.Magnifier",
@@ -131,6 +132,8 @@ void main(string[] arg) {
     var settings = new Settings("com.tobiasquinn.mousewheelzoom");
     string key = settings.get_string("modifier-key");
     bool super_key = settings.get_boolean("super-key");
+    bool invert_scroll = settings.get_boolean("invert-scroll");
+    double incr = settings.get_double("incremental-zoom-rate");
 
     // default to ALT as modifier
     int keymask = X.KeyMask.Mod1Mask;
@@ -166,16 +169,24 @@ void main(string[] arg) {
 
     // process the X events
     X.Event evt = Event();
-    Zoomer zoom = new Zoomer();
+    Zoomer zoom = new Zoomer(incr);
     while (true) {
         disp.next_event(ref evt);
         switch(evt.xbutton.button) {
             case MOUSEWHEEL_UP:
-                zoom.zoomIn();
+                if (invert_scroll) {
+                    zoom.zoomOut();
+                } else {
+                    zoom.zoomIn();
+                }
                 break;
 
             case MOUSEWHEEL_DOWN:
-                zoom.zoomOut();
+                if (invert_scroll) {
+                    zoom.zoomIn();
+                } else {
+                    zoom.zoomOut();
+                }
                 break;
 
             default:
